@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.opmode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name = "Auto Shoot + Move")
+@Autonomous(name = "Auto Shoot1 + Move")
 public class AutoShootMove extends AutoSuperClass {
 
     @Override
@@ -13,8 +13,7 @@ public class AutoShootMove extends AutoSuperClass {
         waitForStart();
 //==========================//
 
-        shoot();
+        shoot1();
         move(0.7,(2*Math.PI)/3, 1000);
-        stopFlyWheelNice();
     }
 }
