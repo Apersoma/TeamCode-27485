@@ -1,14 +1,12 @@
 package org.firstinspires.ftc.teamcode.opmode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.CRServoImplEx;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.ServoImplEx;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.pipeline.HardwarePipeline;
 import org.firstinspires.ftc.teamcode.pipeline.TelemetryPipeline;
@@ -27,7 +25,14 @@ public abstract class AutoSuperClass extends LinearOpMode {
     VoltageSensor controlHub;
 
     public void loadAndShoot() {
-        
+
+    }
+
+    public static DcMotorEx getCocker(HardwareMap hardwareMap) {
+        DcMotorEx cocker = hardwareMap.get(DcMotorEx.class, "cocker");
+        cocker.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        cocker.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        return cocker;
     }
 
     public void initialize(boolean startParallelTelemetry) {
@@ -36,13 +41,9 @@ public abstract class AutoSuperClass extends LinearOpMode {
 
         timer = new ElapsedTime();
 
-        cocker = hardwareMap.get(DcMotorEx.class, "cocker");
-        cocker.setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
-        cocker.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        cocker = getCocker(hardwareMap);
 
         controlHub = hardwareMap.voltageSensor.get("Control Hub");
-
-        floor.setPosition(0);
 
         if (startParallelTelemetry) {
             this.startParallelTelemetry();
@@ -50,29 +51,12 @@ public abstract class AutoSuperClass extends LinearOpMode {
     }
 
     public void shoot1() {
-        cocker.setTargetPosition(HardwareConstants.COCKER_POS_A);
-    }
-
-    public void leak() {
-        //just in case
-        kicker.setPosition(0);
-
-        // ball 1
-        intake.setPower(-1);
-        sleep(2000);
-
-        // ball 2
-        this.setMiniFlyWheels(-1);
-        sleep(2000);
-
-        // ball 3
-        floor.setPosition(HardwareConstants.FLOOR_POS);
-        sleep(2000);
-
-        // reset
-        intake.setPower(0);
-        this.setMiniFlyWheels(0);
-        floor.setPosition(0);
+//        cocker.setTargetPosition(HardwareConstants.COCKER_POS)
+        cocker.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        sleep(5000);
+        cocker.setPower(0.7);
+        sleep(5000);
+        cocker.setPower(0);
     }
 
     /// angle is the angle to the line extending out the front of the robot
@@ -92,7 +76,9 @@ public abstract class AutoSuperClass extends LinearOpMode {
                 while (!auto.isStopRequested()) {
                     telemetryPipeline.addDataPointPerpetual("real cocker pos", cocker.getCurrentPosition());
                     telemetryPipeline.addDataPointPerpetual("real cocker target", cocker.getTargetPosition());
-                    telemetryPipeline.addDataPointPerpetual("set cocker target", HardwareConstants.COCKER_POS_A);
+                    telemetryPipeline.addDataPointPerpetual("set cocker target", HardwareConstants.COCKER_POS);
+                    telemetryPipeline.addDataPoint("cocker current (mA)", cocker.getCurrent(CurrentUnit.MILLIAMPS));
+                    telemetryPipeline.addDataPoint("max safe current (mA)", cocker.getCurrentAlert(CurrentUnit.MILLIAMPS));
                     telemetryPipeline.refresh();
                 }
             }
