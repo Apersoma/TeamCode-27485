@@ -153,10 +153,4 @@ public class CompOpMode extends OpMode{
         telemetryPipeline.addDataPoint("set cocker target", HardwareConstants.COCKER_POS_A);
         telemetryPipeline.refresh();
     }
-
-    @Override
-    public void stop() {
-        flyWheel.setPower(0);
-        flyWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-    }
 }
