@@ -50,10 +50,10 @@ public class GampadeUtils {
     public static double[] speedInputs(@NonNull GamepadEx ctrl) {
         double[] speeds = new double[2];
         if (dpadInUse(ctrl)) {
-            speeds[0] = cast(ctrl.getButton(DPAD_DOWN)) - cast(ctrl.getButton(DPAD_UP));
+            speeds[0] = cast(ctrl.getButton(DPAD_UP)) - cast(ctrl.getButton(DPAD_DOWN));
             speeds[1] = cast(ctrl.getButton(DPAD_RIGHT)) - cast(ctrl.getButton(DPAD_LEFT));
         } else {
-            speeds[0] = -ctrl.getLeftY();
+            speeds[0] = ctrl.getLeftY();
             speeds[1] = ctrl.getLeftX();
         }
         return speeds;
