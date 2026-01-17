@@ -10,7 +10,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 
 import org.firstinspires.ftc.teamcode.pipeline.TelemetryPipeline;
 import static java.lang.Math.abs;
-public class GampadUtils {
+public class GampadeUtils {
     /**
      *
      * @return true if any button on the dpad is held
@@ -50,7 +50,7 @@ public class GampadUtils {
     public static double[] speedInputs(@NonNull GamepadEx ctrl) {
         double[] speeds = new double[2];
         if (dpadInUse(ctrl)) {
-            speeds[0] = cast(ctrl.getButton(DPAD_UP)) - cast(ctrl.getButton(DPAD_DOWN));
+            speeds[0] = cast(ctrl.getButton(DPAD_DOWN)) - cast(ctrl.getButton(DPAD_UP));
             speeds[1] = cast(ctrl.getButton(DPAD_RIGHT)) - cast(ctrl.getButton(DPAD_LEFT));
         } else {
             speeds[0] = -ctrl.getLeftY();

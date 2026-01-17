@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.pipeline.HardwarePipeline;
 import org.firstinspires.ftc.teamcode.pipeline.TelemetryPipeline;
 import org.firstinspires.ftc.teamcode.utility.ButtonOnPress;
 import org.firstinspires.ftc.teamcode.utility.ButtonToggle;
-import org.firstinspires.ftc.teamcode.utility.GampadUtils;
+import org.firstinspires.ftc.teamcode.utility.GampadeUtils;
 import org.firstinspires.ftc.teamcode.utility.HardwareConstants;
 import org.firstinspires.ftc.teamcode.utility.Supervisor;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -156,7 +156,7 @@ public class CompOpMode extends OpMode{
         double turnSpeed = gamepad1.right_trigger - gamepad1.left_trigger;
 //        double forwardSpeed = gamepadEx1.getLeftY();
 //        double strafeSpeed = gamepadEx1.getLeftX();
-        double[] speeds = GampadUtils.speedInputs(primaryCtrl);
+        double[] speeds = GampadeUtils.speedInputs(primaryCtrl);
         double forwardSpeed = speeds[0];
         double strafeSpeed = speeds[1];
         boolean throttleSpeed = throttleLeftStickToggle.check(primaryCtrl);
