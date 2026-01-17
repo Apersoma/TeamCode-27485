@@ -75,7 +75,6 @@ public class CompOpMode extends OpMode{
     final ButtonToggle testRightStickToggle = new ButtonToggle(RIGHT_STICK_BUTTON, false);
 
     @SuppressWarnings("unused")
-
     final ButtonOnPress incrementOnPress = new ButtonOnPress(DPAD_UP);
     @SuppressWarnings("unused")
     final ButtonOnPress decrementOnPress = new ButtonOnPress(DPAD_DOWN);
@@ -171,7 +170,7 @@ public class CompOpMode extends OpMode{
 
         supervisor.run(telemetryPipeline);
 
-        if (secondaryCtrl.getButton(A))  {
+        if (secondaryCtrl.getButton(A)) {
             flyWheel.setVelocity(HardwareConstants.FLY_WHEEL_VEL/-10);
         } else {
             flyWheel.setVelocity(flyWheelRBumperToggle.check(primaryCtrl) ? HardwareConstants.FLY_WHEEL_VEL : 0, AngleUnit.RADIANS);
