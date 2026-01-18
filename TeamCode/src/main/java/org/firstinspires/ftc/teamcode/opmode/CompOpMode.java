@@ -22,7 +22,7 @@ import org.firstinspires.ftc.teamcode.utility.HardwareConstants;
 import org.firstinspires.ftc.teamcode.utility.Supervisor;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
-@TeleOp(name = "Competition TeleOp")
+@TeleOp(name = "Competition TeleOp", group = "Main")
 public class CompOpMode extends OpMode{
     protected TelemetryPipeline telemetryPipeline;
     protected HardwarePipeline drive;
@@ -51,7 +51,6 @@ public class CompOpMode extends OpMode{
         fwl = hardwareMap.get(CRServoImplEx.class, "fwl");
         kicker = hardwareMap.get(ServoImplEx.class, "kicker");
         floor = hardwareMap.get(ServoImplEx.class, "floor");
-//        kicker = hardwareMap.get(ServoImplEx.class, "kicker");
 
         flyWheel = hardwareMap.get(DcMotorEx.class, "flyWheel");
         controlHub = hardwareMap.voltageSensor.get("Control Hub");
@@ -171,9 +170,13 @@ public class CompOpMode extends OpMode{
         supervisor.run(telemetryPipeline);
 
         if (secondaryCtrl.getButton(A)) {
-            flyWheel.setVelocity(HardwareConstants.FLY_WHEEL_VEL/-10);
+            double flyWheelVel = HardwareConstants.FLY_WHEEL_VEL/-5;
+            telemetryPipeline.addDataPoint("FlyWheel vel", flyWheelVel);
+            flyWheel.setVelocity(flyWheelVel, AngleUnit.RADIANS);
         } else {
-            flyWheel.setVelocity(flyWheelRBumperToggle.check(primaryCtrl) ? HardwareConstants.FLY_WHEEL_VEL : 0, AngleUnit.RADIANS);
+            double flyWheelVel = flyWheelRBumperToggle.check(primaryCtrl) ? HardwareConstants.FLY_WHEEL_VEL : 0;
+            telemetryPipeline.addDataPoint("FlyWheel vel", flyWheelVel);
+            flyWheel.setVelocity(flyWheelVel, AngleUnit.RADIANS);
         }
 
         telemetryPipeline.addDataPoint("forward Speed", forwardSpeed);

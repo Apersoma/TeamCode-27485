@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.opmode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name = "Auto Leak + Move")
+@Autonomous(name = "Auto Leak + Move", group = "Main")
 public class AutoLeakMove extends AutoLeak {
     @Override
     public void runOpMode() {

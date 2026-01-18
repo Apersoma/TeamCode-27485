@@ -133,9 +133,12 @@ public abstract class AutoSuperClass extends LinearOpMode {
 
     /// angle is the angle to the line extending out the front of the robot
     public void move(double speed, double angleRad, long timeMillis) {
+        this.move(speed, angleRad, timeMillis, 0.1);
+    }
+    public void move(double speed, double angleRad, long timeMillis, double correction) {
         double forwardSpeed = Math.cos(angleRad) * speed;
         double strafeSpeed = Math.sin(angleRad) * speed;
-        drive.driveRobotCentric(-strafeSpeed, -forwardSpeed, 0.1);
+        drive.driveRobotCentric(-strafeSpeed, -forwardSpeed, correction);
         sleep(timeMillis);
         drive.driveRobotCentric(0,0,0);
     }

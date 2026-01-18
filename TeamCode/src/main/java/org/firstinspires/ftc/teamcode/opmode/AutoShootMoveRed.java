@@ -2,8 +2,9 @@ package org.firstinspires.ftc.teamcode.opmode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name = "Auto Leak", group = "Main")
-public class AutoLeak extends AutoSuperClass {
+@Autonomous(name = "Auto Shoot + Move (Red)", group = "Main")
+public class AutoShootMoveRed extends AutoSuperClass {
+
     @Override
     public void runOpMode() {
         initialize(true);
@@ -12,6 +13,8 @@ public class AutoLeak extends AutoSuperClass {
         waitForStart();
 //==========================//
 
-        leak();
+        shoot();
+        move(0.85, (-(2*Math.PI)/3), 1500, -0.05);
+        stopFlyWheelNice();
     }
 }
