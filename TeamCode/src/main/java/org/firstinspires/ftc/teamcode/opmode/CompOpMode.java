@@ -184,7 +184,6 @@ public class CompOpMode extends OpMode{
         telemetryPipeline.addDataPoint("strafe Speed", strafeSpeed);
         telemetryPipeline.addDataPoint("FlyWheel Power", flyWheel.getPower());
         telemetryPipeline.addDataPoint("FlyWheel Velocity", flyWheel.getVelocity(AngleUnit.RADIANS));
-        telemetryPipeline.addDataPoint("FLY_WHEEL_VEL", HardwareConstants.FLY_WHEEL_VEL);
         telemetryPipeline.refresh();
     }
 
