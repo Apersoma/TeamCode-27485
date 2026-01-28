@@ -12,7 +12,7 @@ public class AutoShoot extends AutoSuperClass {
         waitForStart();
 //==========================//
 
-        shoot();
+        shootClose();
         stopFlyWheelNice();
     }
 }

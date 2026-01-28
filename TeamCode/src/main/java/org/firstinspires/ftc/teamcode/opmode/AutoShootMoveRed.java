@@ -13,7 +13,7 @@ public class AutoShootMoveRed extends AutoSuperClass {
         waitForStart();
 //==========================//
 
-        shoot();
+        shootClose();
         move(0.85, (-(2*Math.PI)/3), 1500, -0.05);
         stopFlyWheelNice();
     }

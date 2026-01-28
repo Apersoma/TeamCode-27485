@@ -24,7 +24,7 @@ public abstract class AutoSuperClass extends LinearOpMode {
     ElapsedTime timer;
 
     CRServoImplEx fwl, fwr, intake;
-    ServoImplEx kicker, floor;
+    ServoImplEx kicker, floor, bar;
     DcMotorEx flyWheel;
     VoltageSensor controlHub;
 
@@ -59,8 +59,11 @@ public abstract class AutoSuperClass extends LinearOpMode {
         intake = hardwareMap.get(CRServoImplEx.class, "intake");
         fwr = hardwareMap.get(CRServoImplEx.class, "fwr");
         fwl = hardwareMap.get(CRServoImplEx.class, "fwl");
+
         kicker = hardwareMap.get(ServoImplEx.class, "kicker");
         floor = hardwareMap.get(ServoImplEx.class, "floor");
+        bar = hardwareMap.get(ServoImplEx.class, "bar");
+        bar.setPosition(HardwareConstants.CLOSE_BAR_POS);
 
         flyWheel = hardwareMap.get(DcMotorEx.class, "flyWheel");
         flyWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
@@ -74,7 +77,7 @@ public abstract class AutoSuperClass extends LinearOpMode {
         }
     }
 
-    public void shoot() {
+    public void shootClose() {
         flyWheel.setVelocity(HardwareConstants.FLY_WHEEL_VEL, AngleUnit.RADIANS);
 
         sleep(7000);

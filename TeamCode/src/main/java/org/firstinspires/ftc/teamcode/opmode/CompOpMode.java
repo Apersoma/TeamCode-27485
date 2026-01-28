@@ -32,7 +32,7 @@ public class CompOpMode extends OpMode{
 
     GamepadEx gamepadEx1, gamepadEx2;
     CRServoImplEx fwl, fwr, intake;
-    ServoImplEx kicker, floor;
+    ServoImplEx kicker, floor, bar;
     DcMotorEx flyWheel;
     VoltageSensor controlHub;
 
@@ -49,8 +49,11 @@ public class CompOpMode extends OpMode{
         intake = hardwareMap.get(CRServoImplEx.class, "intake");
         fwr = hardwareMap.get(CRServoImplEx.class, "fwr");
         fwl = hardwareMap.get(CRServoImplEx.class, "fwl");
+
         kicker = hardwareMap.get(ServoImplEx.class, "kicker");
         floor = hardwareMap.get(ServoImplEx.class, "floor");
+        bar = hardwareMap.get(ServoImplEx.class, "bar");
+        bar.setPosition(HardwareConstants.CLOSE_BAR_POS);
 
         flyWheel = hardwareMap.get(DcMotorEx.class, "flyWheel");
         controlHub = hardwareMap.voltageSensor.get("Control Hub");
@@ -65,6 +68,7 @@ public class CompOpMode extends OpMode{
     // PRIMARY CONTROLLER
     final ButtonToggle intakeXToggle = new ButtonToggle(X, false);
     final ButtonToggle flyWheelRBumperToggle = new ButtonToggle(RIGHT_BUMPER, false);
+    final ButtonToggle farLBumperToggle = new ButtonToggle(LEFT_BUMPER, false);
     final ButtonToggle kickerBToggle = new ButtonToggle(B, false);
     final ButtonToggle throttleLeftStickToggle = new ButtonToggle(LEFT_STICK_BUTTON, true);
     final ButtonOnPress floorYOnPress = new ButtonOnPress(Y);
@@ -77,6 +81,10 @@ public class CompOpMode extends OpMode{
     final ButtonOnPress incrementOnPress = new ButtonOnPress(DPAD_UP);
     @SuppressWarnings("unused")
     final ButtonOnPress decrementOnPress = new ButtonOnPress(DPAD_DOWN);
+    @SuppressWarnings("unused")
+    final ButtonOnPress increment2OnPress = new ButtonOnPress(DPAD_RIGHT);
+    @SuppressWarnings("unused")
+    final ButtonOnPress decrement2OnPress = new ButtonOnPress(DPAD_LEFT);
 
     GamepadEx primaryCtrl, secondaryCtrl;
 
@@ -122,13 +130,6 @@ public class CompOpMode extends OpMode{
             return;
         }
 
-//        if (incrementOnPress.check(secondaryCtrl)) {
-//            HardwareConstants.FLY_WHEEL_VEL += 0.01;
-//        } else if (decrementOnPress.check(secondaryCtrl)) {
-//            HardwareConstants.FLY_WHEEL_VEL -= 0.01;
-//        }
-
-
         if (secondaryCtrl.getButton(X)) {
             setMiniFlyWheelPowers(-1);
             intake.setPower(-1);
@@ -150,7 +151,43 @@ public class CompOpMode extends OpMode{
             }
         }
 
+        if (farLBumperToggle.check(primaryCtrl)) {
+            bar.setPosition(HardwareConstants.FAR_BAR_POS);
+            telemetryPipeline.addDataPoint("bar goal", HardwareConstants.FAR_BAR_POS);
+            if (increment2OnPress.check(secondaryCtrl)) {
+                HardwareConstants.FAR_FLY_WHEEL_VEL += 0.01;
+            } else if (decrement2OnPress.check(secondaryCtrl)) {
+                HardwareConstants.FAR_FLY_WHEEL_VEL -= 0.01;
+            }
+            if (incrementOnPress.check(secondaryCtrl)) {
+                HardwareConstants.FAR_BAR_POS += 0.01;
+            } else if (decrementOnPress.check(secondaryCtrl)) {
+                HardwareConstants.FAR_BAR_POS -= 0.01;
+            }
+        } else {
+            bar.setPosition(HardwareConstants.CLOSE_BAR_POS);
+            telemetryPipeline.addDataPoint("bar goal", HardwareConstants.CLOSE_BAR_POS);
+        }
+        telemetryPipeline.addDataPoint("bar pos", bar.getPosition());
 
+        if (secondaryCtrl.getButton(A)) {
+            telemetryPipeline.addDataPoint("FlyWheel power", 1);
+            flyWheel.setPower(1);
+        } else if (secondaryCtrl.getButton(B)) {
+            telemetryPipeline.addDataPoint("FlyWheel power", -1);
+            flyWheel.setPower(-1);
+        } else {
+            double flyWheelVel;
+            if (!flyWheelRBumperToggle.check(primaryCtrl)) {
+                flyWheelVel = 0;
+            } else if (farLBumperToggle.check(primaryCtrl)) {
+                flyWheelVel = HardwareConstants.FAR_FLY_WHEEL_VEL;
+            } else {
+                flyWheelVel = HardwareConstants.FLY_WHEEL_VEL;
+            }
+            telemetryPipeline.addDataPoint("FlyWheel goal vel", flyWheelVel);
+            flyWheel.setVelocity(flyWheelVel, AngleUnit.RADIANS);
+        }
 
         double turnSpeed = gamepad1.right_trigger - gamepad1.left_trigger;
 //        double forwardSpeed = gamepadEx1.getLeftY();
@@ -168,16 +205,6 @@ public class CompOpMode extends OpMode{
         );
 
         supervisor.run(telemetryPipeline);
-
-        if (secondaryCtrl.getButton(A)) {
-            double flyWheelVel = HardwareConstants.FLY_WHEEL_VEL/-5;
-            telemetryPipeline.addDataPoint("FlyWheel vel", flyWheelVel);
-            flyWheel.setVelocity(flyWheelVel, AngleUnit.RADIANS);
-        } else {
-            double flyWheelVel = flyWheelRBumperToggle.check(primaryCtrl) ? HardwareConstants.FLY_WHEEL_VEL : 0;
-            telemetryPipeline.addDataPoint("FlyWheel vel", flyWheelVel);
-            flyWheel.setVelocity(flyWheelVel, AngleUnit.RADIANS);
-        }
 
         telemetryPipeline.addDataPoint("forward Speed", forwardSpeed);
         telemetryPipeline.addDataPoint("turn Speed", turnSpeed);
