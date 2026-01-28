@@ -68,7 +68,7 @@ public class CompOpMode extends OpMode{
     // PRIMARY CONTROLLER
     final ButtonToggle intakeXToggle = new ButtonToggle(X, false);
     final ButtonToggle flyWheelRBumperToggle = new ButtonToggle(RIGHT_BUMPER, false);
-    final ButtonToggle farLBumperToggle = new ButtonToggle(LEFT_BUMPER, false);
+    final ButtonToggle farAToggle = new ButtonToggle(A, false);
     final ButtonToggle kickerBToggle = new ButtonToggle(B, false);
     final ButtonToggle throttleLeftStickToggle = new ButtonToggle(LEFT_STICK_BUTTON, true);
     final ButtonOnPress floorYOnPress = new ButtonOnPress(Y);
@@ -151,7 +151,7 @@ public class CompOpMode extends OpMode{
             }
         }
 
-        if (farLBumperToggle.check(primaryCtrl)) {
+        if (farAToggle.check(primaryCtrl)) {
             bar.setPosition(HardwareConstants.FAR_BAR_POS);
             telemetryPipeline.addDataPoint("bar goal", HardwareConstants.FAR_BAR_POS);
             if (increment2OnPress.check(secondaryCtrl)) {
@@ -180,7 +180,7 @@ public class CompOpMode extends OpMode{
             double flyWheelVel;
             if (!flyWheelRBumperToggle.check(primaryCtrl)) {
                 flyWheelVel = 0;
-            } else if (farLBumperToggle.check(primaryCtrl)) {
+            } else if (farAToggle.check(primaryCtrl)) {
                 flyWheelVel = HardwareConstants.FAR_FLY_WHEEL_VEL;
             } else {
                 flyWheelVel = HardwareConstants.FLY_WHEEL_VEL;
