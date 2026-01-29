@@ -77,9 +77,9 @@ public abstract class AutoSuperClass extends LinearOpMode {
         }
     }
 
-    public void shootClose() {
-        flyWheel.setVelocity(HardwareConstants.FLY_WHEEL_VEL, AngleUnit.RADIANS);
-
+    public void shoot(boolean far) {
+        flyWheel.setVelocity(far ? HardwareConstants.FAR_FLY_WHEEL_VEL : HardwareConstants.FLY_WHEEL_VEL, AngleUnit.RADIANS);
+        bar.setPosition(far ? HardwareConstants.FAR_BAR_POS : HardwareConstants.CLOSE_BAR_POS);
         sleep(7000);
 
         // using `this` instead of just calling the method so that its more visually distinct from sleep

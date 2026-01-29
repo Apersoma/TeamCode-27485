@@ -12,7 +12,7 @@ public class AutoShootMoveBlue extends AutoSuperClass {
         waitForStart();
 //==========================//
 
-        shootClose();
+        shoot(false);
         move(0.85,(2*Math.PI)/3, 1500);
         stopFlyWheelNice();
     }
