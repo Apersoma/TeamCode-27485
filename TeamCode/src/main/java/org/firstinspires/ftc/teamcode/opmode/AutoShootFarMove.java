@@ -2,8 +2,8 @@ package org.firstinspires.ftc.teamcode.opmode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-//@Autonomous(name = "Auto Shoot Far + Move (Blue)", group = "Main")
-public class AutoShootFarMoveBlue extends AutoSuperClass {
+@Autonomous(name = "Auto Shoot Far + Move Forward", group = "Main")
+public class AutoShootFarMove extends AutoSuperClass {
     @Override
     public void runOpMode() {
         initialize(true);
@@ -14,7 +14,7 @@ public class AutoShootFarMoveBlue extends AutoSuperClass {
 
         shoot(true);
         intake.setPower(1);
-        move(0.85,Math.PI/2, 1000);
+        move(0.85,-Math.PI/2, 1000);
         stopFlyWheelNice();
         intake.setPower(0);
     }
