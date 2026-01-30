@@ -52,8 +52,10 @@ public class CompOpMode extends OpMode{
 
         kicker = hardwareMap.get(ServoImplEx.class, "kicker");
         floor = hardwareMap.get(ServoImplEx.class, "floor");
+        floor.setPosition(HardwareConstants.FLOOR_OUT_POS);
         bar = hardwareMap.get(ServoImplEx.class, "bar");
         bar.setPosition(HardwareConstants.CLOSE_BAR_POS);
+
 
         flyWheel = hardwareMap.get(DcMotorEx.class, "flyWheel");
         controlHub = hardwareMap.voltageSensor.get("Control Hub");
@@ -145,15 +147,16 @@ public class CompOpMode extends OpMode{
                 floorYOnPress.checkWithin(primaryCtrl, 1000) ||
                 holdFloorYToggle.check(secondaryCtrl)
             ) {
-                floor.setPosition(HardwareConstants.FLOOR_POS);
+                floor.setPosition(HardwareConstants.FLOOR_IN_POS);
             } else {
-                floor.setPosition(0);
+                floor.setPosition(HardwareConstants.FLOOR_OUT_POS);
             }
         }
 
         if (farAToggle.check(primaryCtrl)) {
             bar.setPosition(HardwareConstants.FAR_BAR_POS);
             telemetryPipeline.addDataPoint("bar goal", HardwareConstants.FAR_BAR_POS);
+
             if (increment2OnPress.check(secondaryCtrl)) {
                 HardwareConstants.FAR_FLY_WHEEL_VEL += 0.01;
             } else if (decrement2OnPress.check(secondaryCtrl)) {
@@ -167,6 +170,12 @@ public class CompOpMode extends OpMode{
         } else {
             bar.setPosition(HardwareConstants.CLOSE_BAR_POS);
             telemetryPipeline.addDataPoint("bar goal", HardwareConstants.CLOSE_BAR_POS);
+
+            if (incrementOnPress.check(secondaryCtrl)) {
+                HardwareConstants.FLOOR_OUT_POS += 0.01;
+            } else if (decrementOnPress.check(secondaryCtrl)) {
+                HardwareConstants.FLOOR_OUT_POS -= 0.01;
+            }
         }
         telemetryPipeline.addDataPoint("bar pos", bar.getPosition());
 

@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.utility.HardwareConstants;
 
-@Autonomous(name = "Test")
+@Autonomous(name = "Test", group = "Z so its sorted last")
 public class AutoTest extends AutoSuperClass {
 
     @Override

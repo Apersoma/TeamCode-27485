@@ -70,7 +70,7 @@ public abstract class AutoSuperClass extends LinearOpMode {
 
         controlHub = hardwareMap.voltageSensor.get("Control Hub");
 
-        floor.setPosition(0);
+        floor.setPosition(HardwareConstants.FLOOR_OUT_POS);
 
         if (startParallelTelemetry) {
             this.startParallelTelemetry();
@@ -92,7 +92,7 @@ public abstract class AutoSuperClass extends LinearOpMode {
 
         sleep(1000);
 
-        floor.setPosition(HardwareConstants.FLOOR_POS);
+        floor.setPosition(HardwareConstants.FLOOR_IN_POS);
 
         sleep(1000);
 
@@ -101,6 +101,7 @@ public abstract class AutoSuperClass extends LinearOpMode {
         sleep(1000);
 
         intake.setPower(0);
+        floor.setPosition(HardwareConstants.FLOOR_OUT_POS);
     }
 
     public void leak() {
@@ -116,13 +117,13 @@ public abstract class AutoSuperClass extends LinearOpMode {
         sleep(2000);
 
         // ball 3
-        floor.setPosition(HardwareConstants.FLOOR_POS);
+        floor.setPosition(HardwareConstants.FLOOR_IN_POS);
         sleep(2000);
 
         // reset
         intake.setPower(0);
         this.setMiniFlyWheels(0);
-        floor.setPosition(0);
+        floor.setPosition(HardwareConstants.FLOOR_OUT_POS);
     }
 
     public void stopFlyWheelNice(){

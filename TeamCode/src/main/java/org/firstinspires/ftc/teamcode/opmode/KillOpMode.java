@@ -29,7 +29,7 @@ import static java.lang.Math.signum;
 
 import java.text.DecimalFormat;
 
-@TeleOp(name = "ZDont Run This. Will Destroy Robot")
+@TeleOp(name = "ZDont Run This. Will Destroy Robot", group = "Z so its sorted last")
 public class KillOpMode extends OpMode{
     protected TelemetryPipeline telemetryPipeline;
     protected HardwarePipeline drive;

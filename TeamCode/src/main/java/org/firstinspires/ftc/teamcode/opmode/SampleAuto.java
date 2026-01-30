@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.threading.ThreadedSupervisor;
 import org.firstinspires.ftc.teamcode.threading.ThreadedWorker;
 
-@Autonomous(name = "Sample Auto Path")
+@Autonomous(name = "Sample Auto Path", group = "Z so its sorted last")
 public class SampleAuto extends LinearOpMode {
     @Override
     public void runOpMode() {
